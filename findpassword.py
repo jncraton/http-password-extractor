@@ -36,7 +36,7 @@ def get_basic_auth_credentials(filename):
     >>> list(get_basic_auth_credentials('logins.pcap'))[-1]
     ('isabel_hutchinson', 'FSLWKEmw')
     """
-    with open("logins.pcap", "rb") as fp:
+    with open(filename, "rb") as fp:
         pcap = dpkt.pcap.Reader(fp)
         for _, buf in pcap:
             # Read the Ethernet frame
