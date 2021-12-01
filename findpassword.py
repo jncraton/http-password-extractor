@@ -6,6 +6,10 @@ import dpkt
 def extract_credentials(auth_header):
     """ Extracts credentials from an http auth header
 
+    It may be helpful to review the HTTP Authorization header:
+    
+    https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side
+
     >>> extract_credentials('Basic aXNhYmVsX2h1dGNoaW5zb246RlNMV0tFbXc=')
     ('isabel_hutchinson', 'FSLWKEmw')
     """
@@ -18,6 +22,10 @@ def extract_credentials(auth_header):
 
 def get_basic_auth_credentials(filename):
     """ Implements a generator to yeild basic auth credentials from capture file
+
+    This generator will open a pcap file, process the included packets, and
+    yield any HTTP basic auth credentials that it finds. The credentials will
+    be represented as (user, password) tuples.
 
     >>> next(get_basic_auth_credentials('logins.pcap'))
     ('matthew_cooley', 'revsZxFY')
