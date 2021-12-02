@@ -1,5 +1,5 @@
-HTTP Basic Auth Password Finder
-===============================
+HTTP Basic Auth Password Extractor
+==================================
 
 This program is able to find passwords in a Wireshark or tcpdump pcap file. Passwords are extracted from HTTP `Authorization` headers.
 
