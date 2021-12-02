@@ -1,6 +1,7 @@
 import sys
 import base64
 import dpkt
+import re
 
 
 def extract_credentials(auth_header):
@@ -16,6 +17,11 @@ def extract_credentials(auth_header):
 
     # Add code to split base64 string and decode into username and password
     # The base64 module should be used to handle the decoding
+    
+    
+    var = base64.b64decode(auth_header[5:]).decode('utf-8')
+    user= var.split(":")[0]
+    password= var.split(":")[1]
 
     return (user, password)
 
@@ -43,10 +49,10 @@ def get_basic_auth_credentials(filename):
             eth = dpkt.ethernet.Ethernet(buf)
 
             # Read the IP portion of the packet as the payload of the Ethernet frame
-            ip = eth.<expression for packet data payload>
+            ip = eth.data
 
             # Read the TCP portion of the packet as the payload of the IP packet
-            tcp = ip.<expression for packet data payload>
+            tcp = ip.data
 
             if isinstance(tcp, dpkt.tcp.TCP):
                 try:
@@ -67,12 +73,18 @@ def find_password(user, filename="logins.pcap"):
     'PYvkSngJ'
     
     >>> find_password('boba_fett')
+
     
     """
-
     # Add code to iterate over get_basic_auth_credentials generator and return a 
     # matching password for the supplied username
+    for u,password in get_basic_auth_credentials(filename):
+        if user == u:
+            return password
+    
+        
 
 
 if __name__ == "__main__":
+    
     print(find_password(sys.argv[1], sys.argv[2]))
